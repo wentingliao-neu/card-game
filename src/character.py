@@ -131,13 +131,13 @@ class Character:
             return True, p + 1
 
     def attack(self, maze0):
-        dt = 0
-        bossdt = 0
+        die_time = 0
+        boss_die_time = 0
         self.attack_se.play()
         for n in maze0.maze.neigh([self.block[1], self.block[0]]):  # 列行转为行列
             match maze0.maze[n]:
                 case 2:
-                    talk = True if maze0.maze.monster_left() == 2 else False
+                    talk = maze0.maze.monster_left() == 2
                     if talk:
                         d = Dialog(maze0.num, 6)
                         self.infected(d[0])
@@ -150,7 +150,7 @@ class Character:
                         break
                     else:
                         self.dead = True
-                        dt = pygame.time.get_ticks()
+                        die_time = pygame.time.get_ticks()
 
                 case 3:
                     self.card_deck.append(
